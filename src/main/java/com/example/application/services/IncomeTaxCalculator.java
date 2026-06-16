@@ -12,15 +12,15 @@ public class IncomeTaxCalculator {
     public Double calculateTotalTax(Long income) {
         double taxFreeIncome = income / 3.0;
         double taxableIncome = income - Math.min(450000, taxFreeIncome);
-        int[] ar = {5, 10, 15, 20};
-        int[] br = {100000, 300000, 400000, 500000};
-        double tx = 0;
-        taxableIncome = Math.max(0, taxableIncome - 350000);
-        for (int i = 0; i < ar.length; i++) {
-            tx += Math.min(taxableIncome, br[i]) * ar[i] / 100;
-            taxableIncome = Math.max(0, taxableIncome - br[i]);
+        int[] rates = {10, 15, 20, 25};
+        int[] slabAmounts = {300000, 400000, 500000, 2000000};
+        double totalTax = 0;
+        taxableIncome = Math.max(0, taxableIncome - 375000);
+        for (int i = 0; i < rates.length; i++) {
+            totalTax += Math.min(taxableIncome, slabAmounts[i]) * rates[i] / 100;
+            taxableIncome = Math.max(0, taxableIncome - slabAmounts[i]);
         }
-        tx += taxableIncome * 25 / 100;
-        return tx;
+        totalTax += taxableIncome * 25 / 100;
+        return totalTax;
     }
 }
